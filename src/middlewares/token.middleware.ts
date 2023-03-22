@@ -1,16 +1,9 @@
+import { JwtPayload, CustomRequest } from './../utils/interface';
 import jwt from "jsonwebtoken";
 import { User } from "../models";
 import { Request, Response, NextFunction } from "express";
 
-interface JwtPayload {
-   data: string
-}
-
-export interface IGetUserAuthInfoRequest extends Request {
-   user: any 
-}
-
-const tokenDecode = (req: IGetUserAuthInfoRequest) => {
+const tokenDecode = (req: Request) => {
    try {
       const bearer = req.headers['authorization'];
 
@@ -24,7 +17,7 @@ const tokenDecode = (req: IGetUserAuthInfoRequest) => {
    } catch { return false }
 }
 
-export const tokenAuth = async (req: IGetUserAuthInfoRequest, res: Response, next: NextFunction) => {
+export const tokenAuth = async (req: Request, res: Response, next: NextFunction) => {
    const tokenDecoded = tokenDecode(req);
 
    if (!tokenDecoded) {
@@ -38,7 +31,7 @@ export const tokenAuth = async (req: IGetUserAuthInfoRequest, res: Response, nex
 
    if (!user) return res.status(401).json({ message: "Token invalid" });
 
-   req.user = user;
+   (req as CustomRequest).user = user
 
    next();
 }
