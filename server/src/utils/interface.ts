@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 export interface JwtPayload {
-   data: string
+   userId: string
 }
 
 export interface CustomRequest extends Request {

@@ -1,4 +1,4 @@
-import mongoose, { Connection } from "mongoose";
+import mongoose from "mongoose";
 import { config } from './config';
 
 export const connectDB = async () => {

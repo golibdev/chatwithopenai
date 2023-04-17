@@ -8,9 +8,9 @@ const tokenDecode = (req: Request) => {
       const bearer = req.headers['authorization'];
 
       if (bearer) {
-         const token = bearer.split(" ")[1];
+         const token = bearer.split(" ")[1]; // bearer token
 
-         return jwt.verify(token, process.env.TOKEN_SECRET as string);
+         return jwt.verify(token, process.env.TOKEN_SECRET as string); // true
       }
 
       return false;
@@ -26,8 +26,8 @@ export const tokenAuth = async (req: Request, res: Response, next: NextFunction)
       })
    }
 
-   const { data } = tokenDecoded as JwtPayload;
-   const user = await User.findById(data);
+   const { userId } = tokenDecoded as JwtPayload;
+   const user = await User.findById(userId);
 
    if (!user) return res.status(401).json({ message: "Token invalid" });
 

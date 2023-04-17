@@ -4,7 +4,7 @@ import chatRoute from "./chat.route";
 
 const router: Router = Router();
 
-router.use('/user', userRoute);
+router.use('/users', userRoute);
 router.use('/chats', chatRoute);
 
 export default router;
